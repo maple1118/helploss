@@ -1,0 +1,27 @@
+<div class="container">
+  <div class="row">
+    <div class="body" style>
+      <h1>商品一覧</h1>
+        <%= link_to "NEW ITEMS", new_admin_product_path %>
+        <table>
+          <thead>
+            <tr>
+              <th>商品ID</th>
+              <th>商品名</th>
+              <th>価格</th>
+            </tr>
+          </thead>
+          
+          <% @products.each do |product| %>
+          <tbody>
+            <tr>
+              <td><%= product.id %></td>
+              <td><%= link_to product.name, admin_product_path(product.id) %></td>
+              <td><%= product.price %>円</td>
+            </tr>
+          </tbody>
+          <% end %>
+        </table>
+    </div>
+  </div>
+</div>

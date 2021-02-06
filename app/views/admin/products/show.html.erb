@@ -1,0 +1,15 @@
+<div class="container">
+  <div class="row">
+    <div class="body" style>
+      <h1>商品詳細</h1>
+        <%= attachment_image_tag @product, :image, :size =>'100x100' %>
+        <div>
+          商品名 <%= @product.name %></br>
+          商品説明 <%= @product.introduction %></br>
+          価格　<%= @product.price.to_s %>円
+        </div>
+      
+        <%= link_to "削除", admin_product_path(@product.id), method: :delete %>|<%= link_to "編集", edit_admin_product_path(@product.id) %>
+    </div>
+  </div>
+</div>
