@@ -18,4 +18,10 @@ Rails.application.routes.draw do
     resources :products, only:[:new, :create, :index ,:show, :destroy, :edit, :update]
   end
 
+  namespace :customer do
+    resources :products, only:[:index, :show]
+    resources :carts, only:[:index, :create, :update, :destroy]
+    delete 'cart_all' => 'carts#destroy_all'
+  end
+
 end

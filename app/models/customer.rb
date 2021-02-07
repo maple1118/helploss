@@ -3,7 +3,8 @@ class Customer < ApplicationRecord
   # :confirmable, :lockable, :timeoutable, :trackable and :omniauthable
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable
-         
+  has_many :carts, dependent: :destroy
+  
   def prefecture_name
      JpPrefecture::Prefecture.find(code: prefecture_code).try(:name)
   end   

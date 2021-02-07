@@ -1,0 +1,39 @@
+<div class="container">
+  <div class="row">
+    <div class="body" style>
+      <h1>カート一覧</h1>
+        <table>
+          <tr>
+            <th>商品情報</th>
+            <th>数量</th>
+            <th>価格（税込）</th>
+          </tr>
+          <% i = 0 %>
+          <% @cart.each do |cart| %>
+          <tr>
+            <td><%= attachment_image_tag cart.product, :image, size: "100x100" %><%= cart.product.name %></td>
+            <td>
+              <%= form_with model:cart ,url:customer_cart_path(cart), method: :PATCH do |f| %>
+                <%= f.number_field :quantity,autocomplete: "quantity", style:"width: 20%;" %>
+                <!--number_field_tag 'quantity', nil, max: 9-->
+                <%= f.submit "変更" %>
+              <% end %>
+            </td>
+            <td><% subtotal = cart.quantity * cart.product.price %><%= subtotal.to_i %>円</td>
+            <td><%= link_to '削除', customer_cart_path(cart.id), method: :delete ,class:"btn btn-danger" %></td>
+          </tr>
+          <% i = i + cart.quantity * cart.product.price  %>
+          <% end %>
+          <tr>
+            <td colspan="1">
+              <dl>
+                <td>合計金額:</td>
+                <td><%= i.to_i %>円</td>
+              </dl>
+            </td>
+          </tr>
+        </table>
+        <%= link_to "カートを空にする", customer_cart_all_path,method: :delete, class:"btn btn-danger" %>
+    </div>
+  </div>
+</div>
