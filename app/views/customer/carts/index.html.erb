@@ -28,12 +28,18 @@
             <td colspan="1">
               <dl>
                 <td>合計金額:</td>
-                <td><%= i.to_i %>円</td>
+                <td><%= i.to_i %>円（税込）</td>
               </dl>
             </td>
           </tr>
         </table>
-        <%= link_to "カートを空にする", customer_cart_all_path,method: :delete, class:"btn btn-danger" %>
+        <div class="row">
+          <div class="body" style>
+            <span><%= link_to "カートを空にする", customer_cart_all_path,method: :delete, class:"btn btn-danger" %></span>
+            <span><%= link_to "買い物に戻る", customer_products_path, class:"btn btn-secondary" %></span>
+            <span><%= link_to "購入手続きに進む", new_customer_order_path ,class:"btn btn-danger" %></span>
+          </div>
+        </div>
     </div>
   </div>
 </div>

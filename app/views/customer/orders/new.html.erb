@@ -1,0 +1,187 @@
+<div class="container">
+  <div class="row">
+    <div class="body" style>
+      <h5>カートには以下の商品が入っています</h5>
+        <table>
+          <tr>
+            <th>商品情報</th>
+            <th>数量</th>
+            <th>小計（税込）</th>
+          </tr>
+        <% i = 0 %>
+        <% @cart.each do |cart| %>
+          <tr>
+            <td><%= attachment_image_tag cart.product, :image, size: "100x100" %><%= cart.product.name %></td>
+            <td><%= cart.quantity %></td>
+            <td><% subtotal = cart.quantity * cart.product.price %><%= subtotal.to_i %>円</td>
+          </tr>
+          <% i = i + cart.quantity * cart.product.price  %>
+        <% end %>
+        </table>
+        <div>商品合計（税込）：　　<%= i.to_i %>円</div>
+
+
+
+        <%= form_with model:@customer,url: root_path, local:true do |f| %>
+        <table>
+          <tr>
+            <th>注文者情報入力</th>
+          </tr>
+          <tr>
+            <td>お名前　※必須</td>
+            <td><input name="name" value="<%=current_customer.name%>">　（例）山田太郎</td>
+          </tr>
+          <tr>
+            <td>お名前フリガナ ※必須</td>
+            <td><input name_kana="name_kana" value="<%=current_customer.name_kana%>">　（例）ヤマダタロウ</td>
+          </tr>
+          <tr>
+            <td>電話番号（ハイフンなし）</td>
+            <td></td>
+          </tr>
+          <tr>
+            <td>メールアドレス</td>
+            <td><input email="email" value="<%=current_customer.email%>"></td>
+          </tr>
+          <tr>
+            <td>郵便番号</td>
+            <td><%= f.text_field :postcode, autofocus: true, autocomplete: "postcode", id:"customer_postcode" %></td>
+          </tr>
+          <tr>
+            <td>住所</td>
+            <td>
+              都道府県</br>
+              <%= f.collection_select :prefecture_code, JpPrefecture::Prefecture.all, :code, :name, id:"customer_prefecture_code" %></br>
+              市区町村</br>
+              <%= f.text_field :address_city, autofocus: true, autocomplete: "address_city", id:"customer_address_city" %></br>
+              それ以降の住所</br>
+              <%= f.text_field :address_street, autofocus: true, autocomplete: "address_street", id:"customer_address_street" %></br>
+              ※マンション・アパート名は必ず入力してください。</br>
+              ※入力されている住所が勤務先の場合は「会社名・部署名」なども入力してください。
+            </td>
+          </tr>
+        </table>
+
+         <form autocomplete=off>
+
+          <label>
+            <input class="js-check" type="radio" name="rs" value="1" onclick="formSwitch()" >注文者の住所にお届けする
+          </label></br>
+
+          <label>
+            <input class="js-check" type="radio" name="rs" value="1" onclick="formSwitch()">新しいお届け先を入力する
+          </label>
+          <span id="sample">
+            <table>
+                <tr>
+                  <th>お届け先の入力</th>
+                </tr>
+                <tr>
+                  <td>お名前　※必須</td>
+                  <td><input name="name" value="">　（例）山田太郎</td>
+                </tr>
+                <tr>
+                  <td>お名前フリガナ ※必須</td>
+                  <td><input name_kana="name_kana" value="">　（例）ヤマダタロウ</td>
+                </tr>
+                <tr>
+                  <td>電話番号（ハイフンなし）</td>
+                  <td><input phone_namber="phone_namber" value=""></td>
+                </tr>
+                <tr>
+                  <td>郵便番号</td>
+                  <td><input postcode="postcode" value=""></td>
+                </tr>
+                <tr>
+                  <td>住所</td>
+                  <td>
+                    都道府県</br>
+                    <input prefecture_code="prefecture_code" value=""></br>
+                    市区町村</br>
+                    <input address_city="address_city" value=""></br>
+                    それ以降の住所</br>
+                    <input address_street="address_street" value=""></br>
+                    ※マンション・アパート名は必ず入力してください。</br>
+                    ※入力されている住所が勤務先の場合は「会社名・部署名」なども入力してください。
+                  </td>
+                </tr>
+              </table>
+            </span>
+
+            <script>
+              var selecterBox = document.getElementById('sample');
+                function formSwitch() {
+                  check = document.getElementsByClassName('js-check')
+                  console.log(check[0])
+                  if (check[0].checked) {
+                      selecterBox.style.display = "none";
+
+                  } else if (check[1].checked) {
+                      selecterBox.style.display = "block";
+
+                  } else {
+                      selecterBox.style.display = "none";
+                  }
+                }
+                window.addEventListener('load', formSwitch());
+
+                function entryChange2(){
+                    if(document.getElementById('changeSelect')){
+                    id = document.getElementById('changeSelect').value;
+                }
+                }
+
+                $(function() {
+                  return $('#customer_postcode').jpostal({
+                    postcode: ['#customer_postcode'],
+                    address: {
+                      '#customer_prefecture_code': '%3',
+                      '#customer_address_city': '%4',
+                      '#customer_address_street': '%5%6%7',
+                    },
+                  });
+                });
+            </script>
+
+            <table>
+              <tr>
+                <th>支払い方法の選択</th></br>
+              </tr>
+              <tr>
+                <td>
+                    <%= f.radio_button :payment_method, 0, checked: true %> クレジットカード<br>
+                    <%= f.radio_button :payment_method, 1 %> 銀行振込
+                </td>
+              </tr>
+            </table>
+
+
+            <table>
+              <tr>
+                <th>配送方法</th>
+              </tr>
+              <tr>
+                <td><%= f.radio_button :delivery_method, 0, checked: true %> 弊社指定配送方法<br>
+                <td>
+                  ◆佐川急便でのお届け</br>
+                  【お届けの目安】</br>
+                  関東・近畿・中国・四国は出荷日の翌日若しくは翌々日。</br>
+                  東北・九州は出荷日から2～3日程度。</br>
+                  北海道及び沖縄・離島に関しては、出荷日より3～5日程度。</br>
+                  【配送料金】</br>
+                  <li>全国一律800円</li>
+                  <li>〇〇急便でのお届</li></br>
+                </td>
+              </tr>
+            </table>
+
+            <div class="confirm">
+					    <%= f.submit "確認画面へ進む", class:"btn btn-success" %>
+					  </div>
+        <% end %>
+    </div>
+  </div>
+</div>
+
+
+
