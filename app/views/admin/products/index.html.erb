@@ -1,9 +1,13 @@
 <div class="container">
-  <div class="row">
-    <div class="body" style>
+  <div class="pricing-header px-3 py-3 pt-md-5 pb-md4 max-auto text-center">
       <h1>商品一覧</h1>
-        <%= link_to "NEW ITEMS", new_admin_product_path %>
-        <table>
+  </div>
+</div>
+
+<div class="container">
+  <div class="p-3 my-3">
+    <%= link_to "NEW ITEMS", new_admin_product_path, class:"btn btn-info" %>
+        <table class="table table-bordered">
           <thead>
             <tr>
               <th>商品ID</th>
@@ -11,7 +15,7 @@
               <th>価格</th>
             </tr>
           </thead>
-          
+
           <% @products.each do |product| %>
           <tbody>
             <tr>
@@ -22,6 +26,5 @@
           </tbody>
           <% end %>
         </table>
-    </div>
   </div>
 </div>

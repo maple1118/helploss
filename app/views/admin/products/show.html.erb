@@ -1,15 +1,30 @@
 <div class="container">
-  <div class="row">
-    <div class="body" style>
-      <h1>商品詳細</h1>
-        <%= attachment_image_tag @product, :image, :size =>'100x100' %>
-        <div>
-          商品名 <%= @product.name %></br>
-          商品説明 <%= @product.introduction %></br>
-          価格　<%= @product.price.to_s %>円
-        </div>
-      
-        <%= link_to "削除", admin_product_path(@product.id), method: :delete %>|<%= link_to "編集", edit_admin_product_path(@product.id) %>
-    </div>
+  <div class="pricing-header px-3 py-3 pt-md-5 pb-md4 max-auto text-center">
+    <h1>商品詳細</h1>
+  </div>
+</div>
+
+<div class="container">
+  <div class="p-3 my-3">
+    <table class="table table-bordered">
+      <tr>
+        <td>商品画像</td>
+        <td><%= attachment_image_tag @product, :image, :size =>'300x300' %></td>
+      </tr>
+      <tr>
+        <td>商品名</td>
+        <td><%= @product.name %></td>
+      </tr>
+      <tr>
+        <td>商品説明</td>
+        <td><%= @product.introduction %></td>
+      </tr>
+      <tr>
+        <td>価格</td>
+        <td><%= @product.price.to_s %>円</td>
+      </tr>
+    </table>
+    <%= link_to "編集", edit_admin_product_path(@product.id), class: "btn btn-success" %>
+    <%= link_to "削除", admin_product_path(@product.id), method: :delete,  class: "btn btn-danger" %>
   </div>
 </div>

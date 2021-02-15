@@ -16,13 +16,16 @@ Rails.application.routes.draw do
   namespace :admin do
     get 'homes/top'
     resources :products, only:[:new, :create, :index ,:show, :destroy, :edit, :update]
+    resources :customers, only:[:index, :show, :edit, :update]
   end
 
   namespace :customer do
     resources :products, only:[:index, :show]
     resources :carts, only:[:index, :create, :update, :destroy]
     delete 'cart_all' => 'carts#destroy_all'
-    resources :orders, only:[:new]
+    resources :orders, only:[:new, :create, :update,:edit, :index]
+    get 'orders/confirm' => 'orders#confirm'
+    get 'orders/thanks' => 'orders#thanks'
   end
 
 end

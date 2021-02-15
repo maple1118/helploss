@@ -46,6 +46,7 @@ ActiveRecord::Schema.define(version: 2021_02_08_093637) do
     t.string "address_city"
     t.string "address_street"
     t.string "phone_namber"
+    t.integer "payment_method"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["email"], name: "index_customers_on_email", unique: true
@@ -54,11 +55,15 @@ ActiveRecord::Schema.define(version: 2021_02_08_093637) do
 
   create_table "orders", force: :cascade do |t|
     t.integer "customer_id"
+    t.string "name"
+    t.string "name_kana"
+    t.string "email"
+    t.string "phone_namber"
     t.integer "postcode"
     t.integer "prefecture_code"
     t.string "address_sity"
     t.string "address_street"
-    t.integer "payment"
+    t.integer "payment_method"
     t.integer "order_status"
     t.integer "postage"
     t.datetime "created_at", null: false

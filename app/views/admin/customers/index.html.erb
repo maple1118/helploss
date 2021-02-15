@@ -1,0 +1,30 @@
+<div class="container">
+  <div class="pricing-header px-3 py-3 pt-md-5 pb-md4 max-auto text-center">
+    <h1>会員一覧</h1>
+  </div>
+</div>
+
+<div class="container">
+  <div class="p-3 my-3">
+    <table class="table">
+				    <thead>
+						<tr>
+							<th>会員ID</th>
+							<th>氏名</th>
+							<th>メールアドレス</th>
+						</tr>
+					</thead>
+
+					<tbody>
+						<% @customers.each do |customer| %>
+							<tr>
+								<td><%= customer.id %></td>
+								<td><%= link_to customer.name, admin_customer_path(customer.id)%></td>
+				  			<td> <%= customer.email %></td>
+							</tr>
+						<% end %>
+					</tbody>
+				</table>
+
+  </div>
+</div>

@@ -39,6 +39,7 @@ class DeviseCreateCustomers < ActiveRecord::Migration[5.2]
       t.string :address_city
       t.string :address_street
       t.string :phone_namber
+      t.integer :payment_method
       t.timestamps null: false
     end
 
