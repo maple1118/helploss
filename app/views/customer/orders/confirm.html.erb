@@ -1,0 +1,125 @@
+<div class="container">
+  <div class="pricing-header px-3 py-3 pt-md-5 pb-md4 max-auto text-center">
+    <h1>注文内容の確認</h1>
+  </div>
+</div>
+
+<div class="container">
+  <div class="p-3 my-3 text-center">
+    <table class="table table-bordered">
+          <tr>
+            <th>商品名</th>
+            <th>数量</th>
+            <th>小計（税込）</th>
+          </tr>
+          <% i = 0 %>
+          <% @cart.each do |cart| %>
+            <tr>
+              <td><%= attachment_image_tag cart.product, :image, size: "50x50" %><%= cart.product.name %></td>
+              <td><%= cart.quantity %></td>
+              <td><% subtotal = cart.quantity * cart.product.price %><%= subtotal.to_i %>円</td>
+            </tr>
+            <% i = i + cart.quantity * cart.product.price  %>
+          <% end %>
+          </table>
+          <p class="text-right">
+            送料・・・・・・・・・・・・800円</br>
+            配送方法・・・・・弊社指定配送方法</br>
+            商品合計（税込）・・・・・<%= i.to_i %>円
+          </p>
+          <hr>
+          <table class="table table-bordered">
+            <td>お支払い合計　：<%= i + 800 %>円</td>
+          </table>
+  </div>
+</div>
+
+<div class="container">
+  <div class="p-3 my-3">
+    <table class="table table-bordered">
+      <td>
+        ・返品期限</br>
+        商品の返品・交換には初期不良の場合以外では応じられません。</br></br>
+        ・返品送料</br>
+        初期不良、発送商品間違いの場合、当店着払いにて対応いたします。
+      </td>
+    </table>
+  </div>
+</div>
+
+<div class="container">
+  <div class="p-3 my-1">
+    <strong>注文内容確認</strong><br>
+    <table class="table table-bordered">
+      <tr>
+        <td>注文者情報</td>
+      </tr>
+      <tr>
+        <td>お名前</td>
+        <td><%= current_customer.name %></td>
+      </tr>
+      <tr>
+        <td>お名前フリガナ</td>
+        <td><%= current_customer.name_kana %></td>
+      </tr>
+      <tr>
+        <td>電話番号</td>
+        <td><%= current_customer.phone_namber %></td>
+      </tr>
+      <tr>
+        <td>メールアドレス</td>
+        <td><%= current_customer.email %></td>
+      </tr>
+      <tr>
+        <td>住所</td>
+        <td>(<%= current_customer.postcode %>)<%= current_customer.prefecture_code %><%= current_customer.address_city %><%= current_customer.address_street %></td>
+      </tr>
+    </table>
+
+
+    <table class="table table-bordered">
+      <tr>
+        <td>商品お届け先</td>
+      </tr>
+      <tr>
+        <td>お名前</td>
+        <td><%= @order.name %></td>
+      </tr>
+      <tr>
+        <td>お名前フリガナ</td>
+        <td><%= @order.name_kana %></td>
+      </tr>
+      <tr>
+        <td>電話番号</td>
+        <td><%= @order.phone_namber %></td>
+      </tr>
+      <tr>
+        <td>メールアドレス</td>
+        <td><%= @order.email %></td>
+      </tr>
+      <tr>
+        <td>住所</td>
+        <td>（<%= @order.postcode %>）<%= @order.prefecture_code %><%= @order.address_sity %><%= @order.address_street %></td>
+      </tr>
+    </table>
+
+    <table class="table table-bordered">
+      <tr>
+        <td>支払い方法</td>
+        <td>
+          <% if @order.payment_method == true %>
+            <p>クレジットカード</p>
+          <% else %>
+            <p>銀行振り込み</p>
+          <% end %>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+<%= form_with scope: 'new_order', url:customer_orders_path, method: :post, local: true  do |f| %>
+  <%= f.hidden_field :postcode, :value => @order.postcode %>
+  <%= f.hidden_field :new_deliverey_address, :value => @new_address %>
+  <%= f.hidden_field :email_new, :value => @email_new %>
+<%= f.submit "注文を確定する", class: "btn btn-success col-xs-2 col-xs-offset-5" %>
+<% end %>

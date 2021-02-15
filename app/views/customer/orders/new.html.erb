@@ -1,0 +1,189 @@
+<div class="container">
+    <div class="p-3 my-3">
+      <h5>カートには以下の商品が入っています</h5>
+        <table class="table table-bordered">
+          <tr class="table-primary">
+            <th>商品情報</th>
+            <th>数量</th>
+            <th>小計（税込）</th>
+          </tr>
+        <% i = 0 %>
+        <% @cart.each do |cart| %>
+          <tr>
+            <td><%= attachment_image_tag cart.product, :image, size: "50x50" %><%= cart.product.name %></td>
+            <td><%= cart.quantity %></td>
+            <td><% subtotal = cart.quantity * cart.product.price %><%= subtotal.to_i %>円</td>
+          </tr>
+          <% i = i + cart.quantity * cart.product.price  %>
+        <% end %>
+        </table>
+        <div class="text-right">商品合計（税込）：　　<%= i.to_i %>円</div>
+    </div>
+</div>
+
+
+<div class="container">
+  <div class="p-3 my-1">
+    <%= form_with(model: [@customer_form], url:  customer_order_path(@customer),local:true,method: :patch) do |f| %>
+        <table class="table table-bordered">
+          <tr class="table-primary">
+            <th>注文者情報入力</th>
+          </tr>
+          <tr>
+            <td class="table-secondary">お名前　※必須</td>
+            <td><%= f.text_field :name %>　（例）山田太郎</td>
+          </tr>
+          <tr>
+            <td class="table-secondary">お名前フリガナ ※必須</td>
+            <td><%= f.text_field :name_kana %>　（例）ヤマダタロウ</td>
+          </tr>
+          <tr>
+            <td class="table-secondary">電話番号（ハイフンなし）</td>
+            <td><%= f.text_field :phone_namber %></td>
+          </tr>
+          <tr>
+            <td class="table-secondary">メールアドレス</td>
+            <td><%= f.email_field :email %></td>
+          </tr>
+          <tr>
+            <td class="table-secondary">郵便番号</td>
+            <td><%= f.text_field :postcode, autofocus: true, autocomplete: "postcode", id:"customer_postcode" %></td>
+          </tr>
+          <tr>
+            <td class="table-secondary">住所</td>
+            <td>
+              都道府県</br>
+              <%= f.collection_select :prefecture_code, JpPrefecture::Prefecture.all, :code, :name, id:"customer_prefecture_code" %></br>
+              市区町村</br>
+              <%= f.text_field :address_city, autofocus: true, autocomplete: "address_city", id:"customer_address_city" %></br>
+              それ以降の住所</br>
+              <%= f.text_field :address_street, autofocus: true, autocomplete: "address_street", id:"customer_address_street" %></br>
+              ※マンション・アパート名は必ず入力してください。</br>
+              ※入力されている住所が勤務先の場合は「会社名・部署名」なども入力してください。
+            </td>
+          </tr>
+
+        </table>
+
+         <form autocomplete=off>
+
+          <hr>
+          <label>
+            <input class="js-check" type="radio" name="select_address" value="customer_address" onclick="formSwitch(1)"checked >注文者の住所にお届けする
+          </label></br>
+
+          <label>
+            <input class="js-check" type="radio" name="select_address" value="new_deliverey_address" onclick="formSwitch(2)">新しいお届け先を入力する
+          </label>
+          <span id="sample">
+          <table class="table table-bordered">
+            <tr>
+              <td class="table-secondary">お名前　※必須</td>
+              <td><%= f.text_field :name_new %>　（例）山田太郎</td>
+            </tr>
+            <tr>
+              <td class="table-secondary">お名前フリガナ ※必須</td>
+              <td><%= f.text_field :name_kana_new %>　（例）ヤマダタロウ</td>
+            </tr>
+            <tr>
+              <td class="table-secondary">電話番号（ハイフンなし）</td>
+              <td><%= f.text_field :phone_namber_new %></td>
+            </tr>
+            <tr>
+              <td class="table-secondary">メールアドレス</td>
+              <td><%= f.email_field :email_new %></td>
+            </tr>
+            <tr>
+              <td class="table-secondary">郵便番号</td>
+              <td><%= f.text_field :postcode_new, autofocus: true, autocomplete: "postcode", id:"customer_postcode" %></td>
+            </tr>
+            <tr>
+              <td class="table-secondary">住所</td>
+              <td>
+                都道府県</br>
+                <%= f.collection_select :prefecture_code_new, JpPrefecture::Prefecture.all, :code, :name, id:"customer_prefecture_code" %></br>
+                市区町村</br>
+                <%= f.text_field :address_city_new, autofocus: true, autocomplete: "address_city", id:"customer_address_city" %></br>
+                それ以降の住所</br>
+                <%= f.text_field :address_street_new, autofocus: true, autocomplete: "address_street", id:"customer_address_street" %></br>
+                ※マンション・アパート名は必ず入力してください。</br>
+                ※入力されている住所が勤務先の場合は「会社名・部署名」なども入力してください。
+              </td>
+            </tr>
+          </table>
+            </span>
+
+            <script>
+              var selecterBox = document.getElementById('sample');
+                function formSwitch() {
+                  check = document.getElementsByClassName('js-check')
+                  console.log(check[0])
+                  if (check[0].checked) {
+                      selecterBox.style.display = "none";
+
+                  } else if (check[1].checked) {
+                      selecterBox.style.display = "block";
+
+                  } else {
+                      selecterBox.style.display = "none";
+                  }
+                }
+                window.addEventListener('load', formSwitch());
+
+                function entryChange2(){
+                    if(document.getElementById('changeSelect')){
+                    id = document.getElementById('changeSelect').value;
+                }
+                }
+
+                $(function() {
+                  return $('#customer_postcode').jpostal({
+                    postcode: ['#customer_postcode'],
+                    address: {
+                      '#customer_prefecture_code': '%3',
+                      '#customer_address_city': '%4',
+                      '#customer_address_street': '%5%6%7',
+                    },
+                  });
+                });
+            </script>
+            <hr>
+
+            <table class="table table-bordered">
+              <tr class="table-primary">
+                <th>支払い方法の選択</th></br>
+              </tr>
+              <tr>
+                <td>
+                    <%= f.radio_button :payment_method, 0, checked: true %> クレジットカード<br>
+                    <%= f.radio_button :payment_method, 1 %> 銀行振込
+                </td>
+              </tr>
+            </table>
+
+
+            <table class="table table-bordered">
+              <tr class="table-primary">
+                <th>配送方法</th>
+              </tr>
+              <tr>
+                <td class="table-secondary"><%= f.radio_button :delivery_method, 0, checked: true %> 弊社指定配送方法<br>
+                <td>
+                  ◆佐川急便でのお届け</br>
+                  【お届けの目安】</br>
+                  関東・近畿・中国・四国は出荷日の翌日若しくは翌々日。</br>
+                  東北・九州は出荷日から2～3日程度。</br>
+                  北海道及び沖縄・離島に関しては、出荷日より3～5日程度。</br>
+                  【配送料金】</br>
+                  <li>全国一律800円</li>
+                  <li>〇〇急便でのお届</li></br>
+                </td>
+              </tr>
+            </table>
+
+            <div class="confirm">
+					    <%= f.submit "確認画面へ進む", class:"btn btn-success" %>
+					  </div>
+        <% end %>
+  </div>
+</div>

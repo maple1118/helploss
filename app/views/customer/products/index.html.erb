@@ -1,0 +1,29 @@
+<div class="container">
+  <div class="row">
+    <div class="col-lg-12">
+      <div class="top-center-text">
+        <h1>商品一覧</h1>
+      </div>
+    <div class="row">
+      <div class="col-lg-12">
+        <dvi class="list-info">
+          <p>全<%= @product %>件</p>
+        </dvi>
+        <% @products.each do |product| %>
+          <div class="col-lg-3">
+            <%= link_to customer_product_path(product.id) do %>
+            <div>
+              <%= attachment_image_tag product, :image, :size =>'100x100' %>
+            </div>
+            <div>
+              <ul><%= product.name %></ul>
+            <% end %>
+              <ul><%= product.price %>円（税込)</ul>
+            </div>
+          </div>
+        <% end %>
+      </div>
+    </div>
+    </div>
+  </div>
+</div>

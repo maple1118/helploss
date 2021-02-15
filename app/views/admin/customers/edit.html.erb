@@ -1,0 +1,49 @@
+<div class="container">
+  <div class="pricing-header px-3 py-3 pt-md-5 pb-md4 max-auto text-center">
+    <h1>会員編集</h1>
+  </div>
+</div>
+
+<div class="container">
+  <div class="p-3 my-3">
+    <h2><%= @customer.name %>さんの会員情報編集</h2>
+    <%= form_with model:[:admin, @customer], local: true do |f| %>
+    <table class="table table-bordered">
+          <tr>
+            <td class="table-secondary">名前</td>
+            <td><%= f.text_field :name %></td>
+          </tr>
+          <tr>
+            <td class="table-secondary">名前フリガナ</td>
+            <td><%= f.text_field :name_kana %></td>
+          </tr>
+          <tr>
+            <td class="table-secondary">電話番号（ハイフンなし）</td>
+            <td><%= f.text_field :phone_namber %></td>
+          </tr>
+          <tr>
+            <td class="table-secondary">メールアドレス</td>
+            <td><%= f.email_field :email %></td>
+          </tr>
+          <tr>
+            <td class="table-secondary">郵便番号</td>
+            <td><%= f.text_field :postcode, autofocus: true, autocomplete: "postcode", id:"customer_postcode" %></td>
+          </tr>
+          <tr>
+            <td class="table-secondary">住所</td>
+            <td>
+              都道府県</br>
+              <%= f.collection_select :prefecture_code, JpPrefecture::Prefecture.all, :code, :name, id:"customer_prefecture_code" %></br>
+              市区町村</br>
+              <%= f.text_field :address_city, autofocus: true, autocomplete: "address_city", id:"customer_address_city" %></br>
+              それ以降の住所</br>
+              <%= f.text_field :address_street, autofocus: true, autocomplete: "address_street", id:"customer_address_street" %></br>
+              ※マンション・アパート名は必ず入力してください。</br>
+              ※入力されている住所が勤務先の場合は「会社名・部署名」なども入力してください。
+            </td>
+          </tr>
+        </table>
+        <%= f.submit "編集内容を保存する", class: "btn btn-primary"%>
+    <% end %>
+  </div>
+</div>
