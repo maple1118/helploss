@@ -6,7 +6,7 @@ class CreateProducts < ActiveRecord::Migration[5.2]
       t.text :introduction
       t.integer :price
       t.string :image_id
-      t.float :evaluation, null: false
+      t.float :evaluation
       t.timestamps
     end
   end
