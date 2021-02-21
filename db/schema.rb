@@ -86,7 +86,7 @@ ActiveRecord::Schema.define(version: 2021_02_20_120518) do
     t.text "introduction"
     t.integer "price"
     t.string "image_id"
-    t.float "evaluation", null: false
+    t.float "evaluation"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
