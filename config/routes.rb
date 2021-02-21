@@ -26,6 +26,9 @@ Rails.application.routes.draw do
     resources :orders, only:[:new, :create, :update,:edit, :index]
     get 'orders/confirm' => 'orders#confirm'
     get 'orders/thanks' => 'orders#thanks'
+    resources :contacts, only:[:new, :create, :index]
+    get 'contacts/thanks' => 'contacts#thanks'
+    resources :customers, only:[:edit,:update]
   end
 
 end
