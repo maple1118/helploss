@@ -3,6 +3,9 @@ class CreateOrders < ActiveRecord::Migration[5.2]
     create_table :orders do |t|
 
       t.integer :customer_id
+      t.integer :product_id
+      t.integer :quantity
+      t.integer :price
       t.string :name
       t.string :name_kana
       t.string :email

@@ -8,12 +8,21 @@ class Customer::OrdersController < ApplicationController
   def create
     order = Order.new(order_params)
     order.customer_id = current_customer.id
-    order.save
     current_customer.carts.each do |f|
-      op = OrderDetail.new(product_id: f.product.id , quantity: f.quantity , price: f.product.price , order_id: order.id)
-      op.save
+      order.product_id = f.product_id;
+      order.quantity = f.quantity;
+      order.price = f.product.price;
       f.destroy
     end
+    order.save;
+    # order = Order.new(order_params)
+    # order.customer_id = current_customer.id
+    # order.save
+    # current_customer.carts.each do |f|
+    #   op = Order.new(product_id: f.product.id , quantity: f.quantity , price: f.product.price)
+    #   op.save
+    #   f.destroy
+    # end
     redirect_to customer_orders_thanks_path
   end
 
@@ -45,7 +54,6 @@ class Customer::OrdersController < ApplicationController
       @order.prefecture_code = current_customer.prefecture_code
       @order.address_sity = current_customer.address_city
       @order.address_street = current_customer.address_street
-      @order.save
     else
       params[:new_deliverey_address]
       @new_address = params[:new_deliverey_address]
@@ -65,11 +73,16 @@ class Customer::OrdersController < ApplicationController
       @order.prefecture_code = @prefecture_code_new
       @order.address_sity = @address_city_new
       @order.address_street = @address_street_new
-      @order.save
     end
+    @order.save!
   end
 
   def thanks
+  end
+
+  def index
+    # @orders = current_customer.orders.all
+    @orders = Order.where(customer_id: current_customer.id)
   end
 
   private
