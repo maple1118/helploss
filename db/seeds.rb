@@ -10,3 +10,10 @@ Admin.create!(
    email: 'test@test.com',
    password: '123456',
 )
+
+Product.create!(
+   name: 'サンプルデータ',
+   product_image: 'http://placehold.jp/150x150.png',
+   introduction: 'ここに商品の説明文が入ります。',
+   price: 550,
+)
