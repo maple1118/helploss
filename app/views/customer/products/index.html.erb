@@ -1,29 +1,22 @@
 <div class="container">
-  <div class="row">
-    <div class="col-lg-12">
-      <div class="top-center-text">
-        <h1>商品一覧</h1>
-      </div>
-    <div class="row">
-      <div class="col-lg-12">
-        <dvi class="list-info">
-          <p>全<%= @product %>件</p>
-        </dvi>
-        <% @products.each do |product| %>
-          <div class="col-lg-3">
-            <%= link_to customer_product_path(product.id) do %>
-            <div>
-              <%= attachment_image_tag product, :image, :size =>'100x100' %>
-            </div>
-            <div>
-              <ul><%= product.name %></ul>
+  <div class="pricing-header px-3 py-3 pt-md-5 pb-md4 max-auto text-center">
+    <h1>商品一覧</h1>
+  </div>
+</div>
+
+<div class="container">
+  <div class="p-3 my-3">
+          <h3>全<%= @products.count %>件</h3>
+          <form class="form-inline">
+            <% @products.each do |product| %>
+              <%= link_to customer_product_path(product.id) do %>
+                <div class="mx-3">
+                  <%= attachment_image_tag product, :image, :size =>'200x200' %></br>
+                  <%= product.name %></br>
+              <% end %>
+                  <%= product.price %>円（税込)
+                </div>
             <% end %>
-              <ul><%= product.price %>円（税込)</ul>
-            </div>
-          </div>
-        <% end %>
-      </div>
-    </div>
-    </div>
+          </form>
   </div>
 </div>

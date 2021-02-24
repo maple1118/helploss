@@ -4,31 +4,39 @@
     <title>Helploss</title>
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
+    <script src="https://kit.fontawesome.com/280f947faa.js" crossorigin="anonymous"></script>
 
     <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload' %>
     <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
   </head>
 
   <header class="shadow-sm">
-    <nav class="navbar navbar-expand-lg navbar-light">
+    <nav class="navbar navbar-expand-lg navbar-light mb-2" style="background-color:#e6e6fa">
       <div class="container">
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
           <span class="navbar-toggler-icon"></span>
         </button>
+        <h1><a class="navbar-brand" href="https://bd59995bf1fb4d0ba2cffe28353c4524.vfs.cloud9.ap-northeast-1.amazonaws.com/customer/products">Help Loss</a></h1>
+        <i class="fas fa-hands-helping fa-2x"></i>
+        <%# if customer_signed_in? %>
+        <!--<div>ようこそ<%#= current_customer.name %>様</div>-->
+        <%# end %>
         <div class="collapse navbar-collapse" id="navbarNavDropdown">
           <ul class="navbar-nav ml-auto">
             <% if customer_signed_in? %>
-              <li><%= link_to '買う', customer_products_path, class:"btn btn-default" %></li>
-              <li><%= link_to 'カート', customer_carts_path, class:"btn btn-default" %></li>
-              <li><%= link_to '売る', customer_contacts_path, class:"btn btn-default" %></li>
-              <li><%= link_to "ログアウト", destroy_customer_session_path, class:"btn btn-default", method: :delete %></li>
+              <li><%= link_to '買う　', customer_products_path, class:"fas fa-store fa-lg" %></li>
+              <li><%= link_to 'カート　', customer_carts_path, class:"fas fa-shopping-cart fa-lg" %></li>
+              <li><%= link_to '売る　', customer_contacts_path, class:"fas fa-users fa-lg" %></li>
+              <li><%= link_to 'マイページ　', edit_customer_customer_path(current_customer.id), class: "fas fa-users-cog fa-lg" %></li>
+              <li><%= link_to "About　", root_path, class: "fas fa-tv fa-lg" %></li>
+              <li><%= link_to "ログアウト　", destroy_customer_session_path, class:"fas fa-sign-out-alt fa-lg", method: :delete %></li>
             <% elsif admin_signed_in? %>
-              <li><%= link_to '商品一覧', admin_products_path, class:"btn btn-default" %></li>
-              <li><%= link_to '会員一覧', admin_customers_path, class:"btn btn-default" %></li>
-              <li><%= link_to ' ログアウト', destroy_admin_session_path, class:"btn btn-default", method: :delete %></li>
+              <li><%= link_to '商品一覧　', admin_products_path, class:"btn btn-default" %></li>
+              <li><%= link_to '会員一覧　', admin_customers_path, class:"btn btn-default" %></li>
+              <li><%= link_to 'ログアウト　', destroy_admin_session_path, class:"btn btn-default", method: :delete %></li>
             <% else %>
-              <li><%= link_to "新規登録", new_customer_registration_path, class:"btn btn-default" %></li>
-              <li><%= link_to "ログイン", new_customer_session_path, class:"btn btn-default" %></li>
+              <li><%= link_to "新規登録　", new_customer_registration_path, class:"fas fa-user-plus fa-lg" %></li>
+              <li><%= link_to "ログイン　", new_customer_session_path, class:"fas fa-sign-in-alt fa-lg" %></li>
             <% end %>
           </ul>
         </div>
@@ -39,4 +47,11 @@
   <body>
     <%= yield %>
   </body>
+
+<footer class="footer">
+  <div class="container">
+    <p class="text-center">© 2021 Help Loss JAPAN inc.</p>
+  </div>
+</footer>
+
 </html>

@@ -71,7 +71,7 @@ ActiveRecord::Schema.define(version: 2021_02_20_120518) do
     t.string "phone_namber"
     t.integer "postcode"
     t.integer "prefecture_code"
-    t.string "address_sity"
+    t.string "address_city"
     t.string "address_street"
     t.integer "payment_method"
     t.integer "order_status"

@@ -4,9 +4,11 @@
   <td><%= order.created_at.strftime('%Y/%m/%d') %></td>
   <td>
    <%= order.postcode %><br>
-    <%= order.address_sity %><br>
-    <%= order.name %>
-    <%= order.product_id %>
-    <%#= debug order %>
-  </td>
-<% end %>
+    <%= order.address_city %><br>
+    <%= order.name %><br>
+    <%= order.product_id %><br>
+    <%= order.product.name %><br>
+    <%= order.product.id %><br>
+    <%= order.quantity %><br>
+    <% end %>
+
