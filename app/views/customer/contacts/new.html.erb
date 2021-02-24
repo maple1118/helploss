@@ -1,9 +1,24 @@
-<h1>お問い合わせフォーム</h1>
+<div class="container">
+  <div class="pricing-header px-3 py-3 pt-md-5 pb-md4 max-auto text-center">
+    <h1>お問い合わせフォーム</h1>
+  </div>
+</div>
 
-<%= form_with model: @contact, url: customer_contacts_path, local:true do |f| %>
-  <%= f.label :お名前 %></br>
-  <%= f.text_field :name %></br>
-  <%= f.label :お問い合わせ内容 %></br>
-  <%= f.text_area :contact %></br>
-  <%= f.submit '送信' %>
-<% end %>
+<div class="container">
+  <div class="p-3 my-3 text-center">
+    <%= form_with model: @contact, url: customer_contacts_path, local:true do |f| %>
+      <table class="table">
+        <tr>
+          <td><%= f.label :お名前 %></td>
+          <td><%= f.text_field :name, size: "40" %></td>
+        </tr>
+        <tr>
+          <td><%= f.label :お問い合わせ内容 %></td>
+          <td><%= f.text_area :contact, size: "40x10" %></br></td>
+        </tr>
+      </table>
+      <%= button_tag '<i class="fas fa-paper-plane fa-2x" style="color: green;"></i>送信'.html_safe, :type => "submit",
+        :class =>"btn btn-default btn-s-md" %>
+      <% end %>
+  </div>
+</div>

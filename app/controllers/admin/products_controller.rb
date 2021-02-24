@@ -28,8 +28,11 @@ class Admin::ProductsController < ApplicationController
 
   def update
     @product = Product.find(params[:id])
-    @product.update(product_params)
-    redirect_to admin_products_path
+    if @product.update!(product_params)
+      redirect_to admin_products_path
+    else
+      render :edit
+    end
   end
 
   def destroy
@@ -40,6 +43,6 @@ class Admin::ProductsController < ApplicationController
 
   private
   def product_params
-    params.require(:product).permit(:image, :name, :introduction, :price )
+    params.require(:product).permit(:image, :name, :introduction, :price)
   end
 end
