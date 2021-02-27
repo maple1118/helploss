@@ -1,0 +1,63 @@
+<div class="container">
+  <div class="pricing-header px-3 py-3 pt-md-5 pb-md4 max-auto text-center">
+    <h1>注文履歴詳細</h1>
+  </div>
+</div>
+
+<div class="container">
+  <div class="p-3 my-3">
+    <p>注文内容</p>
+    <table class="table table-bordered">
+      <tr>
+        <td class="table-primary">注文日</td>
+        <td><%= @order.created_at.strftime('%Y/%m/%d') %></td>
+      </tr>
+      <tr>
+        <td class="table-primary">配送先</td>
+        <td>
+          〒<%= @order.postcode %></br>
+          <%= @order.prefecture_code %><%= @order.address_city %><%= @order.address_street %></br>
+          <%= @order.name %>
+        </td>
+      </tr>
+      <tr>
+        <td class="table-primary">支払い方法</td>
+        <td>銀行振り込み</td>
+      </tr>
+    </table>
+
+    <% i = 0 %>
+    <% subtotal = 0 %>
+    <p>注文情報</p>
+    <table class="table table-bordered">
+      <tr>
+        <td class="table-primary">商品</td>
+        <td class="table-primary">単価（税込）</td>
+        <td class="table-primary">個数</td>
+        <td class="table-primary">小計</td>
+      </tr>
+      <tr>
+        <td><%= @order.product.name %></td>
+        <td><%= @order.product.price %>円</td>
+        <td><%= @order.quantity %></td>
+        <td><% subtotal = @order.quantity * @order.product.price %><%= subtotal.to_i %>円</td>
+      </tr>
+    </table>
+
+    <p>請求情報</p>
+    <table class="table table-bordered">
+      <tr>
+        <td class="table-primary">商品合計</td>
+        <td><%= subtotal.to_i %>円</td>
+      </tr>
+      <tr>
+        <td class="table-primary">送料</td>
+        <td>800円</td>
+      </tr>
+      <tr>
+        <td class="table-primary">合計金額</td>
+        <td><%= subtotal.to_i + 800 %>円（税込）</td>
+      </tr>
+    </table>
+  </div>
+</div>

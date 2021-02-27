@@ -73,8 +73,11 @@ class Customer::OrdersController < ApplicationController
   end
 
   def index
-    # @orders = Order.where(customer_id: current_customer.id)
     @orders = Order.all.includes(:product)
+  end
+
+  def show
+    @order = Order.find(params[:id])
   end
 
   private
