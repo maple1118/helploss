@@ -16,7 +16,7 @@
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
           <span class="navbar-toggler-icon"></span>
         </button>
-        <h1><a class="navbar-brand" href="https://bd59995bf1fb4d0ba2cffe28353c4524.vfs.cloud9.ap-northeast-1.amazonaws.com/customer/products">Help Loss</a></h1>
+        <%= link_to 'Help Loss', customer_products_path, class: 'nav-link text-dark' %>
         <i class="fas fa-hands-helping fa-2x"></i>
         <%# if customer_signed_in? %>
         <!--<div>ようこそ<%#= current_customer.name %>様</div>-->
