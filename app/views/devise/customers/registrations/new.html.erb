@@ -83,6 +83,11 @@
 
           <%= render "devise/customers/shared/links" %>
 
+          <div class="auto_button">
+            <button id="auto" type="button" class="btn btn-light m-5">自動入力</button>
+          <div>
+
+
           <script>
             $(function() {
             return $('#customer_postcode').jpostal({
@@ -94,6 +99,21 @@
               },
             });
           });
+
+          // 自動入力
+            document.getElementById("auto").onclick = function() {
+            document.getElementById("customer_name").value = "浜辺美波";
+            document.getElementById("customer_name_kana").value = "ハマベミナミ";
+            document.getElementById("customer_email").value = "test@sample.com ";
+            document.getElementById("customer_postcode").value = "1690051";
+            var select = document.getElementById("customer_prefecture_code");
+            select.options[12].selected = true;
+            document.getElementById("customer_address_city").value = "新宿区";
+            document.getElementById("customer_address_street").value = "西早稲田";
+            document.getElementById("customer_phone_namber").value = "09012345678";
+            document.getElementById("customer_password").value = "1q2w3e4r";
+            document.getElementById("customer_password_confirmation").value = "1q2w3e4r";
+          };
           </script>
         </div>
       </div>
